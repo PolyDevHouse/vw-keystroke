@@ -1,4 +1,8 @@
-# 🔑 VW Keystroke
+<p align="center">
+  <img src="assets/rendered/vw-keystroke-256.png" width="120" alt="VW Keystroke">
+</p>
+
+<h1 align="center">VW Keystroke</h1>
 
 **Paste a secret once — it lands in your [Vaultwarden](https://github.com/dani-garcia/vaultwarden)/Bitwarden vault *and* a local `600` env file, in one move.**
 
