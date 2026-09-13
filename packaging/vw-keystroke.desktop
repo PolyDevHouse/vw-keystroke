@@ -1,0 +1,12 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=VW Keystroke
+GenericName=Secret dropper
+Comment=Drop a secret into Vaultwarden + a local env file
+Exec=vwks-gui
+Icon=vw-keystroke
+Terminal=false
+Categories=Utility;Security;
+Keywords=vault;bitwarden;vaultwarden;secret;apikey;env;password;
+StartupNotify=true

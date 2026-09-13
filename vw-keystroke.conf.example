@@ -1,0 +1,24 @@
+# VW Keystroke — copy to ~/.config/vw-keystroke.conf and chmod 600.
+# Every line is OPTIONAL; sensible defaults are used when omitted.
+
+# Your vault server (self-hosted Vaultwarden, or https://vault.bitwarden.com):
+BW_SERVER=https://vault.example.com
+
+# Default project -> writes to ~/.config/<project>.env
+DEFAULT_PROJECT=keys
+
+# Vault folder new items are filed under:
+VAULT_FOLDER=API Keys
+
+# Cached-session lifetime in the OS keyring, in days (0 = never cache / prompt each time):
+KEYRING_TTL_DAYS=30
+
+# Where env files are written (default: ~/.config):
+# ENV_DIR=~/.config
+
+# Optional: non-interactive login via a personal API key, so you never type
+# email/2FA. Otherwise just run `bw login` once. Get these from your vault UI:
+#   Account settings > Security > Keys > "View API Key"
+# You STILL enter your master password to unlock (zero-knowledge decryption).
+# BW_CLIENTID=user.xxxxxxxx
+# BW_CLIENTSECRET=xxxxxxxx

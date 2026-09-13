@@ -1,0 +1,36 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vw-keystroke"
+version = "0.1.0"
+description = "Drop a secret once — into Vaultwarden/Bitwarden and a local 600 env file."
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+authors = [{ name = "PolyDevHouse LLC" }]
+keywords = ["vaultwarden", "bitwarden", "secrets", "api-keys", "dotenv", "keyring"]
+classifiers = [
+  "Environment :: X11 Applications",
+  "Intended Audience :: Developers",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Security",
+  "Topic :: Utilities",
+]
+dependencies = ["keyring>=24"]
+
+[project.urls]
+Homepage = "https://github.com/PatickPolyDev/vw-keystroke"
+Issues = "https://github.com/PatickPolyDev/vw-keystroke/issues"
+
+[project.scripts]
+vwks = "vwkeystroke.cli:main"
+keydrop = "vwkeystroke.cli:main"
+
+[project.gui-scripts]
+vwks-gui = "vwkeystroke.gui:main"
+
+[tool.setuptools]
+packages = ["vwkeystroke"]

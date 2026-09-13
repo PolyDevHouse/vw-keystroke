@@ -1,0 +1,29 @@
+# ── secrets / local config — NEVER commit ────────────────────────────
+*.conf
+!*.conf.example
+*.env
+!*.env.example
+.env
+keydrop.conf
+vw-keystroke.conf
+*.token
+*.key
+*.pem
+
+# ── python build / caches ────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+build/
+dist/
+*.egg-info/
+.eggs/
+.venv/
+venv/
+.mypy_cache/
+.ruff_cache/
+.pytest_cache/
+
+# ── editor / OS cruft ────────────────────────────────────────────────
+.DS_Store
+.idea/
+.vscode/
