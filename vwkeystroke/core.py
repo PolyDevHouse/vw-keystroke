@@ -28,6 +28,16 @@ CONFIG_PATHS = [
 ]
 
 
+def _dbg(msg: str):
+    if not os.environ.get("VWKS_DEBUG"):
+        return
+    try:
+        with open("/tmp/vwks-debug.log", "a", encoding="utf-8") as f:
+            f.write(f"{time.time():.0f}  {msg}\n")
+    except Exception:
+        pass
+
+
 class VwksError(Exception):
     pass
 
@@ -197,7 +207,21 @@ def kr_clear():
 
 
 def _session_ok(bw, base_env, sess) -> bool:
-    return bool(sess) and bw_status(bw, dict(base_env, BW_SESSION=sess)) == "unlocked"
+    """Validate a session by running a real op that requires an unlocked vault.
+    `bw status` is unreliable here — recent bw versions report the on-disk lock
+    state and return "locked" even with a valid session in the environment, so we
+    probe with `bw list folders` instead. stdin is closed so an invalid session
+    fails fast (returns non-zero) rather than dropping into an interactive prompt."""
+    if not sess:
+        return False
+    try:
+        r = subprocess.run([bw, "list", "folders", "--session", sess],
+                           env=dict(base_env, BW_SESSION=sess),
+                           capture_output=True, text=True,
+                           stdin=subprocess.DEVNULL, timeout=30)
+    except Exception:
+        return False
+    return r.returncode == 0 and r.stdout.strip().startswith("[")
 
 
 def session_state(conf: dict | None = None) -> str:
@@ -219,10 +243,14 @@ def session_state(conf: dict | None = None) -> str:
 
 def _ensure_session(bw, base_env, conf, master_password=None) -> str:
     sess = kr_get()
+    _dbg(f"ensure: kr_get -> {'HIT' if sess else 'miss'}; keyring={bool(_keyring)}")
     if _session_ok(bw, base_env, sess):
+        _dbg("ensure: cached session VALID -> reuse")
         kr_store(sess, _ttl_days(conf))  # idle-refresh
         return sess
-    if bw_status(bw, base_env) == "unauthenticated":
+    st = bw_status(bw, base_env)
+    _dbg(f"ensure: cache miss/invalid; bw status(no-session)={st}")
+    if st == "unauthenticated":
         _ensure_server(bw, conf, base_env)
         cid, csec = conf.get("BW_CLIENTID"), conf.get("BW_CLIENTSECRET")
         if cid and csec and "xxxx" not in (cid + csec):
@@ -230,13 +258,18 @@ def _ensure_session(bw, base_env, conf, master_password=None) -> str:
         else:
             raise NeedLogin("Not logged in. Run `bw login` once in a terminal, then retry.")
     if master_password is None:
+        _dbg("ensure: NeedUnlock (no master password provided)")
         raise NeedUnlock("Vault is locked — a master password is required.")
     r = _run(bw, ["unlock", "--passwordenv", "BW_PASSWORD", "--raw"],
              dict(base_env, BW_PASSWORD=master_password))
     sess = r.stdout.strip()
+    _dbg(f"ensure: unlock done; session_len={len(sess)}")
     if not sess:
         raise VwksError("unlock returned no session (wrong master password?)")
     kr_store(sess, _ttl_days(conf))
+    back = kr_get()
+    _dbg(f"ensure: kr_store done; readback={'OK' if back == sess else 'MISMATCH/none'}; "
+         f"revalidate={_session_ok(bw, base_env, sess)}")
     return sess
 
 
