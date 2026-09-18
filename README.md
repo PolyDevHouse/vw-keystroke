@@ -29,10 +29,13 @@ end up lingering in a scratch file. Name it, paste it, done.
 ## Install
 
 ```bash
-pipx install vw-keystroke        # recommended
+# From GitHub (works today):
+pipx install git+https://github.com/PatrickPolyDev/vw-keystroke
 # or
-pip install --user vw-keystroke
+pip install --user git+https://github.com/PatrickPolyDev/vw-keystroke
 ```
+
+> _PyPI release coming soon — then `pipx install vw-keystroke` will Just Work._
 
 This gives you three commands: `vwks` (CLI), `keydrop` (alias), and `vwks-gui` (GUI).
 
