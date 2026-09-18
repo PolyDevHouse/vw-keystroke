@@ -4,6 +4,13 @@
 
 <h1 align="center">VW Keystroke</h1>
 
+<p align="center">
+  <img src="https://img.shields.io/github/license/PolyDevHouse/vw-keystroke" alt="License: MIT">
+  <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="Python 3.9+">
+  <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey" alt="Platforms">
+  <img src="https://img.shields.io/badge/vault-Vaultwarden%20%7C%20Bitwarden-175DDC" alt="Vaultwarden / Bitwarden">
+</p>
+
 **Paste a secret once — it lands in your [Vaultwarden](https://github.com/dani-garcia/vaultwarden)/Bitwarden vault *and* a local `600` env file, in one move.**
 
 Built for the "hot potato" moment: you just generated an API key and you want it
