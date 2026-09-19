@@ -5,6 +5,7 @@
 <h1 align="center">VW Keystroke</h1>
 
 <p align="center">
+  <img src="https://img.shields.io/pypi/v/vw-keystroke" alt="PyPI">
   <img src="https://img.shields.io/github/license/PolyDevHouse/vw-keystroke" alt="License: MIT">
   <img src="https://img.shields.io/badge/python-3.9%2B-blue" alt="Python 3.9+">
   <img src="https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey" alt="Platforms">
@@ -36,13 +37,12 @@ end up lingering in a scratch file. Name it, paste it, done.
 ## Install
 
 ```bash
-# From GitHub (works today):
-pipx install git+https://github.com/PolyDevHouse/vw-keystroke
+pipx install vw-keystroke        # recommended
 # or
-pip install --user git+https://github.com/PolyDevHouse/vw-keystroke
+pip install --user vw-keystroke
+# or straight from source:
+pipx install git+https://github.com/PolyDevHouse/vw-keystroke
 ```
-
-> _PyPI release coming soon — then `pipx install vw-keystroke` will Just Work._
 
 This gives you three commands: `vwks` (CLI), `keydrop` (alias), and `vwks-gui` (GUI).
 
